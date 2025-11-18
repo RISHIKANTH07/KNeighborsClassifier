@@ -42,5 +42,19 @@ def model_train(df,train):
     print("Accuracy:",accuracy_score(y_train,y_pred))
 
     return model
-print(model_train(df,train)) 
+train,x_train,y_train=scale_dataframe(df,oversample=True)
+vaild,x_vaild,y_vaild=scale_dataframe(df,oversample=True)
+test,x_test,y_test=scale_dataframe(df,oversample=True)
+def model_visualize(model,x_test,y_test):
+    y_pred=model.predict(x_test)
+    plt.scatter(range(len(y_test)),y_test,color='blue',label='Actual')
+    plt.scatter(range(len(y_pred)),y_pred,color='red',label='Predicted')
+    plt.title('KNN Classifier: Actual vs Predicted')
+    plt.xlabel('Sample Index')
+    plt.ylabel('Diagnosis')
+    plt.legend()
+    plt.show()
+model=model_train(df,train)
+model_visualize(model,x_test,y_test)
+print(model) 
 
